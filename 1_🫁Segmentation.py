@@ -57,16 +57,13 @@ def body_page():
 
 # SIDEBAR
 with st.sidebar:
-    description = "Tujuan utama aplikasi segmentasi paru modern ini adalah untuk mengidentifikasi dan memisahkan paru-paru dari gambar radiologi, seperti Chest X-Ray (CXR). Tidak hanya itu, segmentasi paru dapat meningkatkan akurasi pada proses pelatihan model klasifikasi data citra. Citra yang diperlukan untuk pelatihan model segmentasi adalah citra Rontgen dan Mask (citra biner yang memisahkan objek dan background)."
-    desc_iou = f"""
-        Cara untuk menghitung keakuratan antara citra original dan hasil segmentasi adalah menggunakna Intersection Of Union (IoU). Berikut ini adalah hasil IoU beberapa model yang menggunakan 1500 data citra beserta mask-nya:
-    """
+    description = "Aplikasi segmentasi paru modern bertujuan mengidentifikasi dan memisahkan paru-paru dari gambar radiologi seperti Chest X-Ray (CXR). Segmentasi paru juga meningkatkan akurasi pelatihan model klasifikasi citra dengan menggunakan citra Rontgen dan Mask (citra biner yang memisahkan objek dan background). Keakuratan diukur dengan Intersection of Union (IoU) pada beberapa model yang menggunakan 1500 data citra dan mask-nya."
+
     iou_all_model = f"""        
             NANTI BUAT DATAFRAME SAJA, KOLOM: MODELS DAN IOU
         """
 
     st.markdown(f'<p style="font-size:15px; text-align:justify">{description}', unsafe_allow_html=True)
-    st.markdown("<p style='font-size:15px; text-align:justify'>{}".format(desc_iou), unsafe_allow_html=True)
     st.markdown("<span style='font-size:17px; text-align:justify font-weight:bold;'>{}</span>".format(iou_all_model), unsafe_allow_html=True)
 
 

@@ -13,8 +13,8 @@ import gdown
 
 def modelsCheck():
     models_url_id = {
-        'UNet' : '1kyUFiaLXwClJDPCq3U-ae1ZHamhEm7Z-',
-        'UNet++' : '1t-Z3AltZ-Kr0TvgZJd-QwJ4Na6e9MCuW'
+        'UNet' : '1zkvSyAAhG2zWZh2fLt-Gg5GFiDyo0X04',
+        'UNet++' : '1--55QSoelNuMpzNmCTd_ksdCnTnZznWA'
         }
     isModelsExist = []
     for model_name in models_url_id.keys():
