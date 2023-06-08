@@ -10,6 +10,7 @@ def header_page():
     st.markdown("<h1 style='text-align: center;'>Modern Lung Segmentation <br> 🫁</h1>", unsafe_allow_html=True)
 
 # FUNCTIONS
+f.modelsCheck()
 def inputFileUploaderSelected():
     st.session_state.input_selected = 'file_uploader'
 

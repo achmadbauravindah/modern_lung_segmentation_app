@@ -8,6 +8,27 @@ import plotly.express as px
 import os
 import base64
 import shutil
+import gdown
+
+
+def modelsCheck():
+    models_url_id = {
+        'UNet' : '1kyUFiaLXwClJDPCq3U-ae1ZHamhEm7Z-',
+        'UNet++' : '1t-Z3AltZ-Kr0TvgZJd-QwJ4Na6e9MCuW'
+        }
+    isModelsExist = []
+    for model_name in models_url_id.keys():
+        folder_path = 'models/{}/'.format(model_name)
+        model_filename = model_name + '.h5'
+        isModelExist = os.path.isfile(os.path.join(folder_path, model_filename))
+        isModelsExist.append(isModelExist)
+    
+    if False in isModelsExist:
+        # HAVE TO UPDATE THE URL IF MODEL UPDATED IN COLAB
+        for name, model_url_id in zip(models_url_id.keys(), models_url_id.values()):
+            save_path = 'models/{}/{}.h5'.format(name, name)
+            url = "https://drive.google.com/uc?id={}".format(model_url_id)
+            gdown.download(url, save_path, quiet=False)
 
 
 def refreshImagesInFolder():
