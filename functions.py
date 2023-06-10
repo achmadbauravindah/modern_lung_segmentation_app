@@ -9,15 +9,17 @@ import os
 import base64
 import shutil
 import gdown
-
+import pandas as pd
 
 def modelsCheck():
-    models_url_id = {
+    # SET SESSION STATE
+    st.session_state.existing_models = {
         'UNet' : '1zkvSyAAhG2zWZh2fLt-Gg5GFiDyo0X04',
         'UNet++' : '1--55QSoelNuMpzNmCTd_ksdCnTnZznWA'
         }
+    models_and_url_id = st.session_state.existing_models
     isModelsExist = []
-    for model_name in models_url_id.keys():
+    for model_name in models_and_url_id.keys():
         folder_path = 'models/{}/'.format(model_name)
         model_filename = model_name + '.h5'
         isModelExist = os.path.isfile(os.path.join(folder_path, model_filename))
@@ -25,11 +27,27 @@ def modelsCheck():
     
     if False in isModelsExist:
         # HAVE TO UPDATE THE URL IF MODEL UPDATED IN COLAB
-        for name, model_url_id in zip(models_url_id.keys(), models_url_id.values()):
+        for name, model_url_id in zip(models_and_url_id.keys(), models_and_url_id.values()):
             save_path = 'models/{}/{}.h5'.format(name, name)
             url = "https://drive.google.com/uc?id={}".format(model_url_id)
             gdown.download(url, save_path, quiet=False)
 
+def getEvaluationDF():
+    models = st.session_state.existing_models
+    evaluation_df = pd.DataFrame(columns=['Model', 'IoU', 'Time'])
+    for model_name in models:
+        # Get CSV
+        model_csv_logger = pd.read_csv('./models/{}/csv_logger_{}.csv'.format(model_name, model_name))
+        # Get IoU and Testing Timein CSV
+        test_iou = "{:.3f}".format(model_csv_logger.iloc[-1]['test_iou'])
+        testing_time = "{:.3f}s".format(model_csv_logger.iloc[-1]['testing_time'])
+        # Put model_name and ioU in DataFrame
+        evaluation_df.loc[len(evaluation_df.index)] = [model_name, test_iou, testing_time]
+    
+    # Start index from 1
+    evaluation_df.index = np.arange(1, len(evaluation_df) + 1)
+
+    return evaluation_df
 
 def refreshImagesInFolder():
     folder_path = 'results_images'

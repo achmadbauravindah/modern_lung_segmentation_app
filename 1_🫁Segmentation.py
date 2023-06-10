@@ -57,14 +57,11 @@ def body_page():
 
 # SIDEBAR
 with st.sidebar:
-    description = "Aplikasi segmentasi paru modern bertujuan mengidentifikasi dan memisahkan paru-paru dari gambar radiologi seperti Chest X-Ray (CXR). Segmentasi paru juga meningkatkan akurasi pelatihan model klasifikasi citra dengan menggunakan citra Rontgen dan Mask (citra biner yang memisahkan objek dan background). Keakuratan diukur dengan Intersection of Union (IoU) pada beberapa model yang menggunakan 1500 data citra dan mask-nya."
-
-    iou_all_model = f"""        
-            NANTI BUAT DATAFRAME SAJA, KOLOM: MODELS DAN IOU
-        """
+    description = "Modern lung segmentation applications aim to identify and separate the lungs from radiological images, such as Chest X-Rays (CXRs). Lung segmentation improves the accuracy of image classification model training and assists medical teams in their observations. The accuracy level is measured using the Intersection over Union (IoU) method in several models that utilize a dataset containing 3000 images and their corresponding masks."
 
     st.markdown(f'<p style="font-size:15px; text-align:justify">{description}', unsafe_allow_html=True)
-    st.markdown("<span style='font-size:17px; text-align:justify font-weight:bold;'>{}</span>".format(iou_all_model), unsafe_allow_html=True)
+    st.markdown("<span style='font-size:17px; text-align:justify font-weight:bold;'>Testing Results : </span>", unsafe_allow_html=True)
+    st.write(f.getEvaluationDF())
 
 
 # FOOTER
