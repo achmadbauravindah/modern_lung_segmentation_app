@@ -20,4 +20,4 @@ In the encoding path, the image dimensions are progressively contracted through 
 
 The UNet architecture has proven effective in various biomedical image segmentation tasks and has served as the basis for many other convolutional neural network architectures.
 
-<span style='font-weight:bold;'>Reference: </span>https://arxiv.org/pdf/1505.04597.pdf
+**Reference:** https://arxiv.org/pdf/1505.04597.pdf

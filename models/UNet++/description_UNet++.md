@@ -15,4 +15,4 @@ The combination of recursive mapping blocks and scale-wise concatenation in UNet
 
 UNet++ represents the latest advancement of the UNet architecture and has demonstrated improved performance in various biomedical image segmentation tasks.
 
-<span style='font-weight:bold;'>Reference: </span>https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7357299/
+**Reference:** 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7357299/'

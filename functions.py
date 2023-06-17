@@ -15,7 +15,9 @@ def modelsCheck():
     # SET SESSION STATE
     st.session_state.existing_models = {
         'UNet' : '1zkvSyAAhG2zWZh2fLt-Gg5GFiDyo0X04',
-        'UNet++' : '1--55QSoelNuMpzNmCTd_ksdCnTnZznWA'
+        'UNet++' : '1--55QSoelNuMpzNmCTd_ksdCnTnZznWA',
+        'R2UNet' : '1nuUI26UdTNWVVqZEiOV5CmjcSR7HP5UA',
+        'AttUNet' : '1aIKJpKm_SOZWmo9Mqp2z97np16Fs2txq',
         }
     models_and_url_id = st.session_state.existing_models
     isModelsExist = []
@@ -31,23 +33,6 @@ def modelsCheck():
             save_path = 'models/{}/{}.h5'.format(name, name)
             url = "https://drive.google.com/uc?id={}".format(model_url_id)
             gdown.download(url, save_path, quiet=False)
-
-def getEvaluationDF():
-    models = st.session_state.existing_models
-    evaluation_df = pd.DataFrame(columns=['Model', 'IoU', 'Time'])
-    for model_name in models:
-        # Get CSV
-        model_csv_logger = pd.read_csv('./models/{}/csv_logger_{}.csv'.format(model_name, model_name))
-        # Get IoU and Testing Timein CSV
-        test_iou = "{:.3f}".format(model_csv_logger.iloc[-1]['test_iou'])
-        testing_time = "{:.3f}s".format(model_csv_logger.iloc[-1]['testing_time'])
-        # Put model_name and ioU in DataFrame
-        evaluation_df.loc[len(evaluation_df.index)] = [model_name, test_iou, testing_time]
-    
-    # Start index from 1
-    evaluation_df.index = np.arange(1, len(evaluation_df) + 1)
-
-    return evaluation_df
 
 def refreshImagesInFolder():
     folder_path = 'results_images'
@@ -267,3 +252,41 @@ def downloadSegmentationResults(model_name):
             data= open('results_images/results_images_{}.zip'.format(model_name), 'rb').read(),
             file_name='results_images_{}.zip'.format(model_name),
             mime='application/zip')
+
+def getEvaluationDF():
+    models = st.session_state.existing_models
+    evaluation_df = pd.DataFrame(columns=['Model', 'IoU', 'Time (s)', 'Trainable Params (M)'])
+    for model_name in models:
+        # Get CSV
+        model_csv_logger = pd.read_csv('./models/{}/csv_logger_{}.csv'.format(model_name, model_name))
+        # Get IoU and Testing Timein CSV
+        test_iou = float("{:.3f}".format(model_csv_logger.iloc[-1]['test_iou']))
+        testing_time = float("{:.3f}".format(model_csv_logger.iloc[-1]['testing_time']))
+        trainable_params = model_csv_logger.iloc[-1]['trainable_params']
+        # Put model_name and ioU in DataFrame
+        evaluation_df.loc[len(evaluation_df.index)] = [model_name, test_iou, testing_time, trainable_params]
+    
+    evaluation_df = evaluation_df.sort_values(by=['Trainable Params (M)'])
+    # Start index from 1
+    evaluation_df.index = np.arange(1, len(evaluation_df) + 1)
+
+    return evaluation_df
+
+def createPlotEvaluation(df):
+    df_sorted = df.sort_values(by='IoU')
+    # Plotting
+    fig = px.scatter(df_sorted, x='Model', y='IoU', size='Time (s)', color='Trainable Params (M)',
+                    hover_data=['Time (s)', 'Trainable Params (M)'], title='Model Evaluation')
+
+    # Line plot
+    fig.add_trace(px.line(df_sorted, x='Model', y='IoU').data[0])
+
+    # Customize the plot
+    fig.update_layout(
+        xaxis=dict(title='Model'),
+        yaxis=dict(title='IoU'),
+        coloraxis=dict(colorbar=dict(title='Trainable Params (M)')),
+    )
+
+    # Show the plot
+    st.plotly_chart(fig)
