@@ -25,11 +25,16 @@ def body_page():
     with l_col_select_model:
         st.markdown("<h4 style='text-align: center; margin:15px'>Select model to create lung segmentation:</h4>", unsafe_allow_html=True)
     with r_col_select_model:
+        eval_df = f.getEvaluationDF()
+        UNet_IoU = eval_df.loc[eval_df['Model'] == 'UNet', 'IoU'].values[0]
+        UNetPP_IoU = eval_df.loc[eval_df['Model'] == 'UNet++', 'IoU'].values[0]
+        AttUNet_IoU = eval_df.loc[eval_df['Model'] == 'AttUNet', 'IoU'].values[0]
+        R2UNet_IoU = eval_df.loc[eval_df['Model'] == 'R2UNet', 'IoU'].values[0]
         options = [
-            "UNet ~ Accuracy: {}%".format(90),
-            "UNet++ ~ Accuracy: {}%".format(95),
-            "AttUNet ~ Accuracy: {}%".format(90),
-            "DeepLabV3 ~ Accuracy: {}%".format(90),
+            "UNet ~ IoU: {}%".format(int(UNet_IoU*100)),
+            "UNet++ ~ IoU: {}%".format(int(UNetPP_IoU*100)),
+            "AttUNet ~ IoU: {}%".format(int(AttUNet_IoU*100)),
+            "DeepLabV3 ~ IoU: {}%".format(int(R2UNet_IoU*100)),
             "All Models At Once"
         ]
         used_model = st.selectbox(label='',

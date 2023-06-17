@@ -131,8 +131,8 @@ def saveSegmentation():
     # Get Used Model from Session
     used_model = st.session_state.used_model
     if used_model == 'All Models At Once':
-        model_names = ['UNet', 'UNet++']
-        for model_name in model_names:
+        models = st.session_state.existing_models.keys()
+        for model_name in models.keys():
             model = tf.keras.models.load_model('./models/{}/{}.h5'.format(model_name, model_name), compile=False)
             for i, image_arr in enumerate(images_arr):
                 ori_image, mask_image, line_mask_image, merge_image, segmented_image = createSegmentation(model, image_arr)
