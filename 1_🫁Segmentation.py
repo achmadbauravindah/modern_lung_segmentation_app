@@ -34,7 +34,7 @@ def body_page():
             "UNet ~ IoU: {}%".format(int(UNet_IoU*100)),
             "UNet++ ~ IoU: {}%".format(int(UNetPP_IoU*100)),
             "AttUNet ~ IoU: {}%".format(int(AttUNet_IoU*100)),
-            "DeepLabV3 ~ IoU: {}%".format(int(R2UNet_IoU*100)),
+            "R2UNet ~ IoU: {}%".format(int(R2UNet_IoU*100)),
             "All Models At Once"
         ]
         used_model = st.selectbox(label='',
