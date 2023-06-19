@@ -1,5 +1,7 @@
 # Modern Lung Segmentation - Documentation
 
+![Example Tutorial Modern Lung Segmentation](./files/tutor_modern_lung_segmentation.gif)
+
 ## Brief Description
 
 Modern Lung Segmentation is an innovative application designed to perform automatic lung segmentation on Chest X-Ray images. This application combines the power of deep learning with a simple and intuitive user interface, allowing users to easily perform fast and accurate lung segmentation.
