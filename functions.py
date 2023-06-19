@@ -167,7 +167,7 @@ def showSegmentationFromCamera():
     used_model = st.session_state.used_model
     # Process All Models At Once
     if used_model == 'All Models At Once':
-        model_names = ['UNet', 'UNet++']
+        model_names = st.session_state.existing_models.keys()
         for model_name in model_names:
             # MODEL TITLE
             st.markdown("<h4 style='text-align: center; margin-top:15px'>Segmented Images With {}</h4>".format(model_name), unsafe_allow_html=True)
@@ -201,7 +201,7 @@ def showSegmentationFromFileUploader():
     used_model = st.session_state.used_model
     # Process All Models At Once
     if used_model == 'All Models At Once':
-        model_names = ['UNet', 'UNet++']
+        model_names = st.session_state.existing_models.keys()
         for model_name in model_names:
             # MODEL TITLE
             st.markdown("<h4 style='text-align: center; margin-top:15px'>Segmented Images With {}</h4>".format(model_name), unsafe_allow_html=True)
