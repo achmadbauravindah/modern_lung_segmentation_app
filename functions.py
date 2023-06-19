@@ -36,11 +36,17 @@ def modelsCheck():
 
 def refreshImagesInFolder():
     folder_path = 'results_images'
-    # Melakukan iterasi pada setiap file dalam folder
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            os.remove(file_path)
+    shutil.rmtree(folder_path, ignore_errors=True)
+    os.makedirs(folder_path, exist_ok=True)
+    model_folders = st.session_state.existing_models.keys()
+    image_folders = ["ori_images", "mask_images", "line_mask_images", "merge_images", "segmented_images"]
+
+    for model_folder in model_folders:
+        model_folder_path = os.path.join(folder_path, model_folder)
+        os.makedirs(model_folder_path, exist_ok=True)
+        for image_folder in image_folders:
+            image_folder_path = os.path.join(model_folder_path, image_folder)
+            os.makedirs(image_folder_path, exist_ok=True)
 
 def createSegmentation(model, image_arr):
     # Image Array
