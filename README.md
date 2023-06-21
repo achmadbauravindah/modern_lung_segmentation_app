@@ -1,6 +1,6 @@
 # Modern Lung Segmentation - Documentation
 
-![Example Tutorial Modern Lung Segmentation](./files/tutor_modern_lung_segmentation.gif)
+![Example Tutorial Modern Lung Segmentation](tutor_modern_lung_segmentation.gif)
 
 ## Brief Description
 
